@@ -7,7 +7,7 @@
 ## Include as a git-dependency (maven release will be cut off later) in `deps.edn`
 
 ``` edn
-{:deps {io.github.DotFox/jsonista.jcs {:git/sha "7aa9a4bda9391006b3b051f0b83c5816d705ab57"}}}
+{:deps {io.github.DotFox/jsonista.jcs {:git/sha "99faeaa5da5eee98d682a4601e6e5f9b7adea44f"}}}
 ```
 
 ## Prep java sources
