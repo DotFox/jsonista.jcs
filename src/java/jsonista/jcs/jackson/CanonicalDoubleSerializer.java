@@ -21,6 +21,13 @@ public class CanonicalDoubleSerializer extends StdSerializer<Double> {
 
     @Override
     public void serialize(Double value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
+        if (Double.isNaN(value)) {
+            throw new NotPermitted.NaNException();
+        }
+
+        if (Double.isInfinite(value)) {
+            throw new NotPermitted.InfiniteException();
+        }
         String canonicalDouble = NumberToJSON.serializeNumber(value);
         jgen.writeNumber(canonicalDouble);
     }

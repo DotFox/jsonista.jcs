@@ -42,7 +42,17 @@
              (json/write-value-as-string
               {"1xxx" nil
                "0xxx" nil}
-              (jcs/object-mapper {:encode-key-fn custom-key-encoder})))))))
+              (jcs/object-mapper {:encode-key-fn custom-key-encoder}))))))
+
+  (testing "unicode sorting"
+    (is (= "{\"\\r\":\"Carriage Return\",\"1\":\"One\",\"\":\"Control\",\"ö\":\"Latin Small Letter O With Diaeresis\",\"€\":\"Euro Sign\",\"😀\":\"Emoji: Grinning Face\",\"דּ\":\"Hebrew Letter Dalet With Dagesh\"}"
+           (json-write-string {"\u20ac" "Euro Sign",
+                               "\r" "Carriage Return",
+                               "\ufb33" "Hebrew Letter Dalet With Dagesh",
+                               "1" "One",
+                               "\ud83d\ude00" "Emoji: Grinning Face",
+                               "\u0080" "Control",
+                               "\u00f6" "Latin Small Letter O With Diaeresis"})))))
 
 (deftest double-test
   (is (= "[333333333.3333333,1e+30,4.5,0.002,1e-27]"

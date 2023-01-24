@@ -3,6 +3,7 @@ package jsonista.jcs.jackson;
 import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Comparator;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,11 +21,21 @@ public class CanonicalMapSerializer extends StdSerializer<Map<Object, Object>> {
         this.keyEncoder = keyEncoder;
     }
 
+    class ExplicitLexicographicComparator implements Comparator<String> {
+        public int compare(String s1, String s2) {
+            return s1.compareTo(s2);
+        }
+    }
+
     @Override
     public void serialize(Map<Object, Object> value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
-        Map<String, Object> m = new TreeMap<String, Object>();
-        for (Object key : value.keySet()) {
-            m.put((String)keyEncoder.invoke(key), value.get(key));
+        Map<String, Object> m = new TreeMap<String, Object>(new ExplicitLexicographicComparator());
+        for (Object originKey : value.keySet()) {
+            String serializedKey = (String)keyEncoder.invoke(originKey);
+            if (m.containsKey(serializedKey)) {
+                throw new NotPermitted.DuplicateKeyException(originKey, serializedKey);
+            }
+            m.put(serializedKey, value.get(originKey));
         }
 
         jgen.writeStartObject();

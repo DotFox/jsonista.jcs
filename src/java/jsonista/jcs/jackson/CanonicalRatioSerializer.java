@@ -23,7 +23,17 @@ public class CanonicalRatioSerializer extends StdSerializer<Ratio> {
 
     @Override
     public void serialize(Ratio value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
-        String canonicalRatio = NumberToJSON.serializeNumber(value.doubleValue());
+        Double doubleValue = value.doubleValue();
+
+        if (Double.isNaN(doubleValue)) {
+            throw new NotPermitted.NaNException();
+        }
+
+        if (Double.isInfinite(doubleValue)) {
+            throw new NotPermitted.InfiniteException();
+        }
+
+        String canonicalRatio = NumberToJSON.serializeNumber(doubleValue);
         jgen.writeNumber(canonicalRatio);
     }
 

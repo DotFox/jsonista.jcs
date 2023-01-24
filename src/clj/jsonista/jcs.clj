@@ -52,7 +52,8 @@
                 2e-3, 0.000000000000000000000000001],
      "string" "\u20ac$\u000F\u000aA'\u0042\u0022\u005c\\\"/",
      :literals [nil, true, false]
-     "control characters" "\u0008\u0009\u000A\u000C\u000D"})
+     "control characters" "\u0008\u0009\u000A\u000C\u000D"
+     "lone surrogate" "\uDEAD"})
 
   (json/write-value-as-string obj (object-mapper))
 
