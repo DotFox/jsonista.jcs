@@ -5,13 +5,13 @@
 ## deps.edn
 
 ```clojure
-dev.dotfox/jsonista.jcs {:mvn/version "1.0.8"}
+dev.dotfox/jsonista.jcs {:mvn/version "1.0.9"}
 ```
 
 or as a git dependency
 
 ```clojure
-io.github.DotFox/jsonista.jcs {:git/sha "99faeaa5da5eee98d682a4601e6e5f9b7adea44f"}
+io.github.DotFox/jsonista.jcs {:git/tag "v1.0.9" :git/sha "2ed4c9d"}
 ```
 
 and prep java sources
@@ -23,7 +23,7 @@ clj -X:deps prep
 ## project.clj
 
 ```clojure
-[dev.dotfox/jsonista.jcs "1.0.8"]
+[dev.dotfox/jsonista.jcs "1.0.9"]
 ```
 
 # TLDR;
